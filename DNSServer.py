@@ -43,14 +43,37 @@ def decrypt_with_aes(encrypted_data, password, salt):
     return decrypted_data.decode('utf-8')
 
 salt = b'Tandon'
-password = 'cf2936@nyu.edu'  # Replace with your NYU email
+password = 'cf2936@nyu.edu'
 input_string = 'AlwaysWatching'
 
-encrypted_value = encrypt_with_aes(input_string, password, salt)
-decrypted_value = decrypt_with_aes(encrypted_value, password, salt)
+encrypted_value = encrypt_with_aes(input_string, password, salt) # test function
+decrypted_value = decrypt_with_aes(encrypted_value, password, salt) # test function
+
+# For future use    
+def generate_sha256_hash(input_string):
+    sha256_hash = hashlib.sha256()
+    sha256_hash.update(input_string.encode('utf-8'))
+    return sha256_hash.hexdigest()
 
 # A dictionary containing DNS records mapping hostnames to different types of DNS data.
 dns_records = {
+    'example.com.': {
+        dns.rdatatype.A: '192.168.1.101',
+        dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
+        dns.rdatatype.MX: [(10, 'mail.example.com.')],  # List of (preference, mail server) tuples
+        dns.rdatatype.CNAME: 'www.example.com.',
+        dns.rdatatype.NS: 'ns.example.com.',
+        dns.rdatatype.TXT: ('This is a TXT record',),
+        dns.rdatatype.SOA: (
+            'ns1.example.com.',  # mname
+            'admin.example.com.',  # rname
+            2023081401,  # serial
+            3600,  # refresh
+            1800,  # retry
+            604800,  # expire
+            86400,  # minimum
+        ),
+    },
     'safebank.com.': {
         dns.rdatatype.A: '192.168.1.102',
     },
@@ -69,7 +92,7 @@ dns_records = {
         dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
         dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
         dns.rdatatype.NS: 'ns1.nyu.edu.',
-    },
+    }
 }
 
 def run_dns_server():
