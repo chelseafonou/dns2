@@ -1,3 +1,4 @@
+
 import dns.message
 import dns.rdatatype
 import dns.rdataclass
@@ -66,13 +67,11 @@ dns_records = {
     'example.com.': {
         dns.rdatatype.A: '192.168.1.101',
         dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0370:7334',
-        dns.rdatatype.MX: [MX(dns.rdataclass.IN, dns.rdatatype.MX, 10, 'mail.example.com.')],
+        dns.rdatatype.MX: [(10, 'mail.example.com.')],  # List of (preference, mail server) tuples
         dns.rdatatype.CNAME: 'www.example.com.',
         dns.rdatatype.NS: 'ns.example.com.',
         dns.rdatatype.TXT: ('This is a TXT record',),
-        dns.rdatatype.SOA: SOA(
-            dns.rdataclass.IN,
-            dns.rdatatype.SOA,
+        dns.rdatatype.SOA: (
             'ns1.example.com.',  # mname
             'admin.example.com.',  # rname
             2023081401,  # serial
@@ -97,22 +96,20 @@ dns_records = {
     'nyu.edu.': {
         dns.rdatatype.A: '192.168.1.106',
         dns.rdatatype.TXT: (encrypted_value,),
-        dns.rdatatype.MX: [MX(dns.rdataclass.IN, dns.rdatatype.MX, 10, 'mxa-00256a01.gslb.pphosted.com.')],
+        dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
         dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
         dns.rdatatype.NS: 'ns1.nyu.edu.',
-        dns.rdatatype.SOA: SOA(
-            dns.rdataclass.IN,
-            dns.rdatatype.SOA,
+        dns.rdatatype.SOA: (
             'ns1.nyu.edu.',  # mname
             'admin.nyu.edu.',  # rname
             2023081401,  # serial
             3600,  # refresh
             1800,  # retry
             604800,  # expire
-            86400,  # minimum
+            86400  # minimum
         ),
-    },
-}
+    }, }
+
 
 def run_dns_server():
     # Create a UDP socket and bind it to the local IP address and port 53 (standard DNS port)
