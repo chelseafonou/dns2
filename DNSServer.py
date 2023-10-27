@@ -87,12 +87,20 @@ dns_records = {
         dns.rdatatype.A: '192.168.1.105',
     },
     'nyu.edu.': {
-        dns.rdatatype.A: '192.168.1.106',
-        dns.rdatatype.TXT: (encrypted_value,),
-        dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
-        dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
-        dns.rdatatype.NS: 'ns1.nyu.edu.',
-    }
+    dns.rdatatype.A: '192.168.1.106',
+    dns.rdatatype.TXT: (encrypted_value,),
+    dns.rdatatype.MX: [(10, 'mxa-00256a01.gslb.pphosted.com.')],
+    dns.rdatatype.AAAA: '2001:0db8:85a3:0000:0000:8a2e:0373:7312',
+    dns.rdatatype.NS: 'ns1.nyu.edu.',
+    dns.rdatatype.SOA: (
+        'ns1.nyu.edu.',        # mname
+        'admin.nyu.edu.',      # rname
+        2023081401,             # serial
+        3600,                   # refresh
+        1800,                   # retry
+        604800,                 # expire
+        86400                   # minimum
+    ),
 }
 
 def run_dns_server():
